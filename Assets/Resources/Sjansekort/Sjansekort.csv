@@ -1,0 +1,19 @@
+Traakket i hundebaesj,-1, -1(kort lunte),,,Har du en historie om aa traakke i hundebaesj
+Ble daarlig i magen,-2, -1(stressa), +2(optimist),,Er det noe karakteren har spist og hva kan ha foert til dette?
+Forsinket pakke,0,-1(kort lunte), -1(bekymret), rolig(+1),Hvordan ville du reagert og hvordan tror du karakteren reagerer?
+Fant tilbud paa vare de vil kjoepe,1,,,,Hva skulle du oenske var paa avslag og hva tror du karakteren fant?
+"Hadde ikke billett paa bussen, kontroll",-1, bekymret(-1), ryddig(-1),,Hvorfor hadde ikke karakteren billett?
+Moete en gammel skolekamerat som gjoer det bra,0,-2(angst), +2(sosial), misunnelig(-1),"Hvordan reagerte karakteren, hva tror du vedkommende tenker?"
+Begynte aa regne,-1, -1(kort lunte), -1(sensitiv), rolig(+1),Hva syns du er fordeler og ulemper med regn?
+Fikk telefon om at man har faatt jobb,1, ryddig(+1), bekymret(+1),,"Hva slags jobb har karakteren faatt, hvorfor ville hen ha jobb?"
+Mistet kjoept mat i gulvet,-1,,,,Hvordan ville du reagert og hvordan tror du karakteren reagerer?
+Pakke i posten,1,,,,
+Moete en venn tilfedig,1, 1+(omtenksom), -2(sensitiv),,"Er det noen personen ville moete, hvorfor var det slik?"
+Traff ekskjaeresten,0, -1(sensitiv), +1(omtenksom),,Hvordan var situasjonen og hvordan haandterte karakteren det?
+Matet gaardsdyr paa tur,1, +1(omtenksom),,,Hvordan tror du det er avslappende og hvordan ville du reagert?
+Plagsom person paa bussen,-1, +1(rolig), -1(bekymret),,Hvordan var de plagsomme og hvordan haandterte karakteren hendelsen?
+Mas fra mor,0, -1(kort lunte), -2(agerende),,Hvordan reagerte karakteren og hvilke foelger fikk det?
+Mistet laptop i bakken,-2, +1(rolig),,,Hva tror du personen foelte foer den hadde sjekket om laptopen fortsatt fungerte?
+Fant en 200-lapp,1, -1(bekymret),,,Hva tror du reaksjonen til personen var og hva gjorde hen?
+Var ekstra fint vaer,1, +1(sensitiv),,,Beskriv fint vaer for deg og hva er det for karakteren?
+Klappet hund,0, +1(bekymret), +1(stressa),,Hvorfor kan vaere avslappende aa klappe en hund?
