@@ -25,7 +25,12 @@ public class Ruter : MonoBehaviour
         else
         {
             kort.AktiverKortet();
-            return true; 
+            Bevegelse b = GameObject.FindGameObjectWithTag("Brikke").GetComponent<Bevegelse>();
+            b.SetVanskelighetsgrad(kort.vanskelighetsgrad);
+            b.SetStatusHendelsesKort();
+            GameObject.FindGameObjectWithTag("UI").GetComponent<UiManager>().SetHendelseskortVerdi(kort.beskrivelse, kort.vanskelighetsgrad);
+
+            return true;
         }
     }
 

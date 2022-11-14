@@ -38,15 +38,14 @@ private void OnValidate()
 }
 #endif
 
-private static string kortsti = "/Resources/Personlighet/Personlighet.csv";
+private static string kortstiPersonlighet = "/Resources/Personlighet/Personlighet.csv";
+private static string kortstiHendelser = "/Resources/Hendelser/Hendelser.csv";
+    private static string korstiNødstiltak = "/Resources/Nødstiltakkort/Nødstiltakkort.csv";
 
     public static void LagKort()
     {
-
-   
-        
-        
-            string[] allelinjer = File.ReadAllLines(Application.dataPath + kortsti);
+            //Personlighetskortene
+            string[] allelinjer = File.ReadAllLines(Application.dataPath + kortstiPersonlighet);
             foreach (string s in allelinjer)
             {
                 string[] splitData = s.Split(',');
@@ -56,9 +55,36 @@ private static string kortsti = "/Resources/Personlighet/Personlighet.csv";
 
                 AssetDatabase.CreateAsset(personlighetskortene, $"Assets/Resources/Personlighet/{personlighetskortene.beskrivelse}.asset");
             }
-            AssetDatabase.SaveAssets();
-        
-        
-        
+            
+
+
+        //Hendelseskortene
+        allelinjer = File.ReadAllLines(Application.dataPath + kortstiHendelser);
+        foreach (string s in allelinjer)
+        {
+            string[] splitData = s.Split(',');
+            ScriptableObjectsHendelseskort hendelseskortene = ScriptableObject.CreateInstance<ScriptableObjectsHendelseskort>();
+            hendelseskortene.beskrivelse = splitData[0];
+            hendelseskortene.kortType = "Hendelseskort";
+            hendelseskortene.vanskelighetsgrad = splitData[1];
+
+            AssetDatabase.CreateAsset(hendelseskortene, $"Assets/Resources/Hendelser/{hendelseskortene.beskrivelse}.asset");
+        }
+
+        allelinjer = File.ReadAllLines(Application.dataPath + korstiNødstiltak);
+        foreach (string s in allelinjer)
+        {
+            string[] splitData = s.Split(',');
+            //NødstiltakKort nødstiltakKort = ScriptableObject.CreateInstance<ScriptableObjectsHendelseskort>();
+            //hendelseskortene.beskrivelse = splitData[0];
+            //hendelseskortene.kortType = "Hendelseskort";
+            //hendelseskortene.vanskelighetsgrad = splitData[1];
+
+            //AssetDatabase.CreateAsset(hendelseskortene, $"Assets/Resources/Hendelser/{hendelseskortene.beskrivelse}.asset");
+        }
+        AssetDatabase.SaveAssets();
+
+
+
     }
 }

@@ -18,6 +18,7 @@ public class HendelsesKort : Kort
     public override void AktiverKortet()
     {
         base.AktiverKortet();
+
         //Debug.Log(beskrivelse);
         //Rull terning
         //Legg til vanskelighetsgrad

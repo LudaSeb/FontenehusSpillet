@@ -4,11 +4,17 @@ using UnityEngine;
 
 public class SjanseKort : Kort
 {
-    int energi;
-    int[] modifikatorer;
-    string sporsmal;
-    public SjanseKort(int kortTall, string beskrivelse, string kortType) : base(kortTall, beskrivelse, kortType)
+    public int energi;
+    public string[] modifikatorer;
+    public string sporsmal;
+    public SjanseKort(int kortTall, string beskrivelse, string kortType, int energi, string[] modifikatorer, string sporsmal) : base(kortTall, beskrivelse, kortType)
     {
+        this.kortTall = kortTall;
+        this.beskrivelse = beskrivelse;
+        this.kortType = kortType;
+        this.energi = energi;
+        this.modifikatorer = modifikatorer;
+        this.sporsmal = sporsmal;
     }
 
 
