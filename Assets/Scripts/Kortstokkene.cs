@@ -9,7 +9,7 @@ public class Kortstokkene : MonoBehaviour
     public List<HendelsesKort> hendelsesKort = new List<HendelsesKort>();
     public List<SjanseKort> sjanseKort = new List<SjanseKort>();
     public List<PersonlighetsKort> personlighetsKort = new List<PersonlighetsKort>();
-    public List<NødstiltakKort> nødstiltakKorts = new List<NødstiltakKort>();
+    public List<NødstiltakKort> nødstiltakKort = new List<NødstiltakKort>();
 
 
     //Dette er for testing
@@ -58,7 +58,7 @@ public class Kortstokkene : MonoBehaviour
             string[] splitData = s.Split(',');
 
             NødstiltakKort kort = new NødstiltakKort(kortTall, splitData[0], "NødstiltakKort", int.Parse(splitData[1]), int.Parse(splitData[2]));
-            nødstiltakKorts.Add(kort);
+            nødstiltakKort.Add(kort);
             kortTall++;
         }
 
@@ -81,13 +81,31 @@ public class Kortstokkene : MonoBehaviour
             SjanseKort kort = new SjanseKort(kortTall, splitData[0], "SjanseKort", int.Parse(splitData[1]),modifikatorer.ToArray(), splitData[5]);
             sjanseKort.Add(kort);
 
-            Debug.Log($"{kort.beskrivelse}, {kort.energi}, modifikatorlengde: {kort.modifikatorer.Length}, {kort.sporsmal}");
+            //Debug.Log($"{kort.beskrivelse}, {kort.energi}, modifikatorlengde: {kort.modifikatorer.Length}, {kort.sporsmal}");
             kortTall++;
         }
         AssetDatabase.SaveAssets();
 
+        StokkKortListe(hendelsesKort);
+        StokkKortListe(sjanseKort);
+        StokkKortListe(personlighetsKort);
+        StokkKortListe(nødstiltakKort);
 
+    }
 
+    public void StokkKortListe<T>(IList<T> list)
+    {
+        System.Random rng = new System.Random();
+
+        int n = list.Count;
+        while (n > 1)
+        {
+            n--;
+            int k = rng.Next(n + 1);
+            T value = list[k];
+            list[k] = list[n];
+            list[n] = value;
+        }
     }
 
 

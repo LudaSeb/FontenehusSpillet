@@ -19,7 +19,6 @@ public class Ruter : MonoBehaviour
     {
         if(kort == null)
         {
-            Debug.Log("Gjør fridag");
             return false;
         }
         else
@@ -49,8 +48,9 @@ public class Ruter : MonoBehaviour
 
         TextMeshPro[] tMP = v.GetComponentsInChildren<TextMeshPro>();
 
-        tMP[0].text = kort.beskrivelse;
-        tMP[1].text = kort.vanskelighetsgrad;
+        v.SetMittKort(kort);
+        //tMP[0].text = kort.beskrivelse;
+        //tMP[1].text = kort.vanskelighetsgrad;
         
 
     }

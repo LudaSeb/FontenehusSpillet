@@ -23,8 +23,8 @@ public class AlleRuter : MonoBehaviour
 
         LeggeUtKort(0);
         LeggeUtKort(7);
-        LeggeUtKort(13);
-        LeggeUtKort(20);
+        LeggeUtKort(14);
+        LeggeUtKort(21);
         
     }
 
@@ -44,17 +44,15 @@ public class AlleRuter : MonoBehaviour
         foreach(Ruter r in valgteDager)
         {
             
-            r.GetComponentInChildren<MeshRenderer>().material.color = Color.red;
+            //r.GetComponentInChildren<MeshRenderer>().material.color = Color.red;
             r.SetKort(hendelsesKortene[trukketKortIndex]);
             
             trukketKortIndex++;
 
+            Debug.Log("Satt kort");
+
 
         }
-
-            //
-
-
     }
 
     List<Ruter> RandomDay(List<Ruter> valgteDager, List<Ruter> gjenstaendeDager)

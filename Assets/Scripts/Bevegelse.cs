@@ -9,9 +9,11 @@ public class Bevegelse : MonoBehaviour
     [SerializeField] float LRSpeedy = 1;
     [SerializeField] float brettkantX;
     [SerializeField] float brettkantZ;
+    [SerializeField] float brikkeFart;
 
     [SerializeField] GameObject fridagPanel;
     [SerializeField] UiManager UI;
+    [SerializeField] DagLagrer dagLagrer;
 
     bool canMove = true;
     bool sisteDag = false;
@@ -21,13 +23,15 @@ public class Bevegelse : MonoBehaviour
     GameObject ruteForeldre;
 
     string status = "";
-    int ruteNummer = -1;
-    int energi = 15;
+    [SerializeField]int ruteNummer = -1;
+    [SerializeField]int energi = 15;
     int humørModifikator = 0;
 
     string vanskelighetsgrad = "safe";
 
     Ruter[] ruter;
+
+    NødstiltakKort aktivtNodKort;
 
     //string[] personlighetsTrekk = new string[5];
     //string[] personlighetsTrekk = {"stressa", "sint"};
@@ -40,7 +44,7 @@ public class Bevegelse : MonoBehaviour
         ruter = ruteForeldre.GetComponentsInChildren<Ruter>();
 
         status = "Sovn";
-        
+
     }
 
 
@@ -48,32 +52,43 @@ public class Bevegelse : MonoBehaviour
     {
         switch (status)
         {
+            
             case "Sovn":
-                LeggTilEnergi(GetComponent<KasteBetydning>().SjekkTabell(GetComponent<Terning>().forrigeRull, "sovn"));
-                Debug.Log("Energi etter søvn er: " + energi);
+                int energiLagtTil = GetComponent<KasteBetydning>().SjekkTabell(GetComponent<Terning>().forrigeRull, "sovn");
+
+                dagLagrer.LeggTilTekstDel("Energi etter søvn: " + energi + " + " + energiLagtTil + " = " + (energi + energiLagtTil) +  "\n");
+                LeggTilEnergi(energiLagtTil);
+
                 FlyttTilNesteDag();
-                bool erDetKortPåRuten;
-                erDetKortPåRuten = ruter[ruteNummer].Activate();
-
-                if (!erDetKortPåRuten)
-                {
-                    UI.SetCurrentPanel(0);
-                }
                 
-
 
                 break;
             case "HendelsesKort":
-                LeggTilEnergi(GetComponent<KasteBetydning>().SjekkTabell(RullMedHumørmodifikator(GetComponent<Terning>().forrigeRull + humørModifikator), vanskelighetsgrad));
-                SjekkHumørModifikator(GetComponent<Terning>().forrigeRull);
+                int energiViSkalLeggeTil = GetComponent<KasteBetydning>().SjekkTabell(RullMedHumørmodifikator(GetComponent<Terning>().forrigeRull + humørModifikator), vanskelighetsgrad);
+                Debug.Log("Vi skal legge til :" + energiViSkalLeggeTil);
+                int humorForRull = humørModifikator;
+                int humorEtterRull = SjekkHumørModifikator(GetComponent<Terning>().forrigeRull);
+
+                dagLagrer.LeggTilTekstDel("Energi etter dagens hendelse: " + energi + " + " + energiViSkalLeggeTil + " = " + (energi + energiViSkalLeggeTil) + "\n" + "Humørmodifikator var : " + humorForRull + " og er nå: " + humorEtterRull + "\n");
+
+                LeggTilEnergi(energiViSkalLeggeTil);
+
                 SetStatusNyDag();
-                Debug.Log("Energi etter hendelse, med vanskelighetsgrad: " + energi.ToString() + ", " + vanskelighetsgrad);
+
+                //Debug.Log("Energi etter hendelse, med vanskelighetsgrad: " + energi.ToString() + ", " + vanskelighetsgrad);
                 break;
             case "RoligDag":
-                SjekkHumørModifikator(GetComponent<Terning>().forrigeRull);
-                LeggTilEnergi(GetComponent<KasteBetydning>().SjekkTabell(GetComponent<Terning>().forrigeRull, "safe"));
+
+                int energiLagtTilRoligDag = GetComponent<KasteBetydning>().SjekkTabell(GetComponent<Terning>().forrigeRull, "safe");
+
+                
+                dagLagrer.LeggTilTekstDel("Energi etter rolig dag: " + energi + " + " + energiLagtTilRoligDag + " = " + (energi + energiLagtTilRoligDag) + "\n");
+
+                LeggTilEnergi(energiLagtTilRoligDag);
+
+                //SjekkHumørModifikator(GetComponent<Terning>().forrigeRull);
                 SetStatusNyDag();
-                Debug.Log("Energi etter dagen: " + energi);
+                //Debug.Log("Energi etter dagen: " + energi);
 
                 break;
             default:
@@ -89,52 +104,62 @@ public class Bevegelse : MonoBehaviour
         //SjanseKort k = sjansekort[1];
         Debug.Log(k.beskrivelse);
         KeyValuePair<string, int>[] m = new KeyValuePair<string, int>[k.modifikatorer.Length];
-        for(int i = 0; i < k.modifikatorer.Length; i++)
+        for (int i = 0; i < k.modifikatorer.Length; i++)
         {
             string[] splittaString = k.modifikatorer[i].Split('(');
 
             string s = splittaString[1].Trim();
-            
+
             m[i] = new KeyValuePair<string, int>(s.Trim(')'), int.Parse(splittaString[0]));
         }
 
-        LeggTilEnergi(k.energi);
-        EndreHumørModifikator(k.energi);
+        //dagLagrer.LeggTilTekstDel("Energi etter sjansekort: " + energi + " + " + k.energi + " = " + (energi + k.energi) + "\n");
+
+
+        int totalEnergiFraModifikatorer = 0;
 
         for (int i = 0; i < GetComponent<Karakter>().personlighetsTrekk.Length; i++)
         {
-            for(int j = 0; j < m.Length; j++)
+            for (int j = 0; j < m.Length; j++)
             {
                 if (GetComponent<Karakter>().personlighetsTrekk[i].ToLower() == m[j].Key.ToLower())
                 {
-                    LeggTilEnergi(m[j].Value);
-                    Debug.Log("Fikk energi Johoo!");
-                    if(m[j].Value > 0)
+                    totalEnergiFraModifikatorer += m[j].Value;
+
+                    if (m[j].Value > 0)
                     {
-                        Debug.Log("Var positiv");
                         GetComponent<Karakter>().SetFargePåEgenskaper(i, new Color32(0, 255, 0, 255));
                     }
-                    else if(m[j].Value < 0)
+                    else if (m[j].Value < 0)
                     {
-                        Debug.Log("Var negativ");
                         GetComponent<Karakter>().SetFargePåEgenskaper(i, new Color32(255, 0, 0, 255));
                     }
                 }
             }
         }
 
+        int humorModFor = humørModifikator;
+        int humorModEtter = EndreHumørModifikator(k.energi);
+
+        dagLagrer.LeggTilTekstDel($"Energi etter sjansekort: {energi} + grunnenergi({k.energi}) + modifikatorenergi({totalEnergiFraModifikatorer}) = {energi + k.energi + totalEnergiFraModifikatorer} \n Humørmodifikator var {humorModFor} og er nå {humorModEtter}");
+
+        
+        
+
         SetStatusSjansekort(k.beskrivelse, k.energi.ToString(), k.modifikatorer, k.sporsmal);
-        Debug.Log("Energi etter kort er: " + energi);
+        //Debug.Log("Energi etter kort er: " + energi);
+        LeggTilEnergi(k.energi + totalEnergiFraModifikatorer);
 
     }
 
     public void RullFysiskTerning()
     {
-        GetComponent<Terning>().RullTerning();
+        //GetComponent<Terning>().RullTerning();
+        GetComponent<Terning>().RullTerningFysisk();
         UI.SetVisTerningSkjerm(false);
         UI.SetVisResultatSkjerm(true);
-        Debug.Log("Du rullet " + GetComponent<Terning>().forrigeRull + " forrige rull");
-        GetComponent<Terning>().RullTerningFysisk();
+        //Debug.Log("Du rullet " + GetComponent<Terning>().forrigeRull + " forrige rull");
+
     }
 
     public void TerningLest()
@@ -149,7 +174,13 @@ public class Bevegelse : MonoBehaviour
         status = "Sovn";
         UI.SetCurrentPanel(3);
         UI.SetVisTerningSkjerm(true);
+        if (sisteDag)
+        {
+            AvsluttSpillet();
+        }
     }
+
+    
 
     public void SetStatusRoligDag()
     {
@@ -157,6 +188,11 @@ public class Bevegelse : MonoBehaviour
         UI.SetCurrentPanel(5);
         UI.SetVisTerningSkjerm(true);
 
+    }
+
+    public void RapportDager()
+    {
+        dagLagrer.LeggTilDagITotalen(ruteNummer, energi);
     }
 
     public void SetStatusGåVidereTilNesteDag()
@@ -169,7 +205,7 @@ public class Bevegelse : MonoBehaviour
         {
             UI.SetCurrentPanel(4);
         }
-        
+
     }
 
     public void SetStatusSjansekort(string beskrivelse, string energi, string[] modifikatorer, string spørsmål)
@@ -194,17 +230,47 @@ public class Bevegelse : MonoBehaviour
     public void LeggTilEnergi(int verdi)
     {
         energi += verdi;
-        UI.OppdaterEnergi(energi.ToString());
+        if(energi <= 0)
+        {
+            UI.OppdaterEnergi("0");
+            UI.SetCurrentPanel(8);
+            status = "NodTiltak";
+            NødstiltakKort[] nodTiltakKort = GameObject.FindGameObjectWithTag("KortStokkene").GetComponent<Kortstokkene>().nødstiltakKort.ToArray();
+            aktivtNodKort = nodTiltakKort[Random.Range(0, nodTiltakKort.Length)];
+
+            Debug.Log("Nødstiltak: " + aktivtNodKort.beskrivelse + ", " + aktivtNodKort.dager);
+        }
+        else if(energi > 30)
+        {
+            energi = 30;
+            UI.OppdaterEnergi("30");
+            
+
+        }
+        else
+        {
+            UI.OppdaterEnergi(energi.ToString());
+        }
+        
     }
 
     public void SetStatusNyDag()
     {
-        
+
         UI.SetCurrentPanel(4);
+    }
+
+    public void Nodstiltak()
+    {
+        ruteNummer += aktivtNodKort.dager - 1;
+        //SetStatusSovn();
+        energi = 10;
+        FlyttTilNesteDag();
     }
 
     void FlyttTilNesteDag()
     {
+        
         ruteNummer += 1;
         if (!sisteDag)
         {
@@ -215,28 +281,63 @@ public class Bevegelse : MonoBehaviour
             }
             else
             {
-                transform.position = ruter[ruteNummer].transform.position;
+
+                StartCoroutine(FlyttSmud());
+                IEnumerator FlyttSmud()
+                {
+                    float timePassed = 0;
+                    float pos = 0;
+                    float lerpDuration = 1.5f;
+                    Vector3 startPos = gameObject.transform.position;
+                    Vector3 endPos = new Vector3(ruter[ruteNummer].transform.position.x, gameObject.transform.position.y, ruter[ruteNummer].transform.position.z);
+                    while (timePassed < lerpDuration)
+                    {
+
+                        float placeInSequence = timePassed / lerpDuration;
+
+                        transform.position = Vector3.Lerp(startPos, endPos, placeInSequence);
+
+
+                        timePassed += Time.deltaTime;
+                        yield return null;
+                        
+
+                    }
+                    
+                    transform.position = ruter[ruteNummer].transform.position;
+                    bool erDetKortPåRuten;
+                    erDetKortPåRuten = ruter[ruteNummer].Activate();
+
+                    if (!erDetKortPåRuten)
+                    {
+                        UI.SetCurrentPanel(0);
+                    }
+
+                }
+
             }
             
+            
+
         }
-        else
-        {
-            Debug.Log("Hurra spillet er ferdig");
-        }
-        
-        
+
     }
 
-    void EndreHumørModifikator(int endring)
+    void AvsluttSpillet() 
     {
-        
-        if(!(humørModifikator + endring < -2) && !(2 < humørModifikator + endring))
+        UI.SetCurrentPanel(7);
+    }
+
+    int EndreHumørModifikator(int endring)
+    {
+
+        if (!(humørModifikator + endring < -2) && !(2 < humørModifikator + endring))
         {
             humørModifikator += endring;
         }
         else
         {
-            if(humørModifikator + endring < -2)
+            if (humørModifikator + endring < -2)
             {
                 humørModifikator = -2;
             }
@@ -247,28 +348,32 @@ public class Bevegelse : MonoBehaviour
         }
 
         UI.EndreHumørmodifikatorVerdi(humørModifikator);
-        
+        return humørModifikator;
+
     }
 
-    void SjekkHumørModifikator(int terningKast)
+    int SjekkHumørModifikator(int terningKast)
     {
-        Debug.Log(terningKast);
-        if(terningKast > 4)
+        //Debug.Log(terningKast);
+        if (terningKast > 4)
         {
-            EndreHumørModifikator(1);
+            return EndreHumørModifikator(1);
         }
-        else if(terningKast < 3)
+        else if (terningKast < 3)
         {
-            EndreHumørModifikator(-1);
+            return EndreHumørModifikator(-1);
         }
+
+        return 0;
     }
 
     int RullMedHumørmodifikator(int terningkast)
     {
-        if(terningkast < 1)
+        if (terningkast < 1)
         {
             return 1;
-        }else if(terningkast > 6)
+        }
+        else if (terningkast > 6)
         {
             return 6;
         }
@@ -279,8 +384,7 @@ public class Bevegelse : MonoBehaviour
 
     }
 
-    
 
-    
+
+
 }
-

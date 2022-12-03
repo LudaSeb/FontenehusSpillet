@@ -17,7 +17,7 @@ public class FysiskTerning : MonoBehaviour
 
     public int LesTerningen()
     {
-        Debug.Log(transform.up);
+        //Debug.Log(transform.up);
         //1 på terningen
         if(CalculateUpAxis(transform.up.y) == 1)
         {
@@ -28,27 +28,27 @@ public class FysiskTerning : MonoBehaviour
         {
             return 6;
         }
-        //2 på terningen
+        //4 på terningen //klar
         else if(CalculateUpAxis(transform.up.z) == 1)
+        {
+            return 4;
+        }
+        //3 på terningen //klar
+        else if (CalculateUpAxis(transform.up.z) == -1)
+        {
+            return 3;
+        }
+        // på terningen
+        else if (CalculateUpAxis(transform.up.x) == -1)
         {
             return 2;
         }
         //5 på terningen
-        else if (CalculateUpAxis(transform.up.z) == -1)
+        else if (CalculateUpAxis(transform.up.x) == 1)
         {
             return 5;
         }
-        //3 på terningen
-        else if (CalculateUpAxis(transform.up.x) == -1)
-        {
-            return 3;
-        }
-        //4 på terningen
-        else if (CalculateUpAxis(transform.up.x) == 1)
-        {
-            return 4;
-        }
-        Debug.Log($"transform.up.x: {(int)transform.up.x}, transform.up.y: {(int)transform.up.y}, transform.up.z: {(int)transform.up.z}");
+        //Debug.Log($"transform.up.x: {(int)transform.up.x}, transform.up.y: {(int)transform.up.y}, transform.up.z: {(int)transform.up.z}");
 
         return 0;
         

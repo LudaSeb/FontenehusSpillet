@@ -37,8 +37,16 @@ public class Karakter : MonoBehaviour
 
     public void SetFargePåEgenskaper(int i, Color32 farge)
     {
-        Debug.Log("Er inne i farge på egenskaper: " + farge);
+        //Debug.Log("Er inne i farge på egenskaper: " + farge);
         displayEgenskaper[i].color = farge;
+    }
+
+    public void ResetFargePåEgenskaper()
+    {
+        for(int i = 0; i < displayEgenskaper.Length; i++)
+        {
+            SetFargePåEgenskaper(i, new Color32(0, 0, 0, 255));
+        }
     }
 
 

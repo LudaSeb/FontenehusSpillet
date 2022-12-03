@@ -1,12 +1,16 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using TMPro;
+using UnityEngine.UI;
 
 public class Terning : MonoBehaviour
 {
     [SerializeField] int maksTerning = 13;
     [SerializeField] float fysiskKastVenteTid = 4;
     [SerializeField] GameObject fysiskTerning;
+    [SerializeField] Button gåVidereKnapp;
+    
     public int forrigeRull;
 
     GameObject rulletTerning;
@@ -43,7 +47,7 @@ public class Terning : MonoBehaviour
             rulletTerning = Instantiate(fysiskTerning, Vector3.zero, Quaternion.identity);
 
             int startPunkt = Random.Range(0, maksTerning);
-            Debug.Log(startPunkt + 1);
+            //Debug.Log(startPunkt + 1);
 
             switch (startPunkt)
             {
@@ -72,7 +76,9 @@ public class Terning : MonoBehaviour
             fTer.GetComponent<FysiskTerning>().KastTerningen();
             yield return new WaitForSeconds(fysiskKastVenteTid);
             resultat = fTer.LesTerningen();
-            Debug.Log(resultat);
+            forrigeRull = resultat;
+            Debug.Log("Du rullet: " + forrigeRull);
+            gåVidereKnapp.gameObject.SetActive(true);
             
         }
         return resultat;
