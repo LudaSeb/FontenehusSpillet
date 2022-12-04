@@ -2,7 +2,8 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using TMPro;
-using UnityEngine.UI;
+using UnityEngine.UIElements;
+//using UnityEngine.UI;
 
 public class UiManager : MonoBehaviour
 {
@@ -11,8 +12,9 @@ public class UiManager : MonoBehaviour
     [SerializeField] GameObject rulleTerningPanel;
     [SerializeField] GameObject resultatTerningPanel;
 
-    [SerializeField] TextMeshProUGUI energiScore;
-    [SerializeField] Slider humørModifikator;
+    [SerializeField] TextMeshPro energiScore;
+    [SerializeField] TextMeshPro humørModifikator;
+    //[SerializeField] Slider humørModifikator;
 
     public void OppdaterEnergi(string nyEnergi)
     {
@@ -67,7 +69,32 @@ public class UiManager : MonoBehaviour
 
     public void EndreHumørmodifikatorVerdi(int verdi)
     {
-        humørModifikator.value = verdi;
+        string nyHModTekst = "Jeg føler meg ";
+        
+        switch (verdi)
+        {
+            case -2:
+                nyHModTekst += "veldig kjip";
+                break;
+            case -1:
+                nyHModTekst += "kjip";
+                break;
+            case 0:
+                nyHModTekst += "ok";
+                break;
+            case 1:
+                nyHModTekst += "bra";
+                break;
+            case 2:
+                nyHModTekst += "veldig bra";
+                break;
+            default:
+                break;
+        }
+        
+        humørModifikator.text = nyHModTekst;
+        
+        
     }
 
     public void SetVisResultatSkjerm(bool status)

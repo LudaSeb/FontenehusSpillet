@@ -25,16 +25,16 @@ RectTransform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 8186718046618253133}
-  m_LocalRotation: {x: 0.009255732, y: 0.7070462, z: -0.7070462, w: 0.009255732}
+  m_LocalRotation: {x: 0, y: 0.7071068, z: -0.7071068, w: 0}
   m_LocalPosition: {x: 0, y: 0, z: 0.1}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 8186718047339170614}
   m_RootOrder: 0
-  m_LocalEulerAnglesHint: {x: 90, y: 180, z: 1.5}
+  m_LocalEulerAnglesHint: {x: 90, y: 180, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -0.014160156, y: 0.10000038}
+  m_AnchoredPosition: {x: 0.31, y: 0.10000038}
   m_SizeDelta: {x: 19, y: 5}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!23 &8186718046618253134
@@ -56,7 +56,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 3284601576198476621, guid: 6074e7ceb1c999b47a47d4fba8eae56e, type: 2}
+  - {fileID: -3055223373348529560, guid: 58780b5b0858c8d4fa3228d0bb234cc7, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -98,10 +98,10 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: Test
+  m_text: Test askoa skooksd asdda
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: 6074e7ceb1c999b47a47d4fba8eae56e, type: 2}
-  m_sharedMaterial: {fileID: 3284601576198476621, guid: 6074e7ceb1c999b47a47d4fba8eae56e, type: 2}
+  m_fontAsset: {fileID: 11400000, guid: 58780b5b0858c8d4fa3228d0bb234cc7, type: 2}
+  m_sharedMaterial: {fileID: -3055223373348529560, guid: 58780b5b0858c8d4fa3228d0bb234cc7, type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []
@@ -125,8 +125,8 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 14
-  m_fontSizeBase: 14
+  m_fontSize: 20
+  m_fontSizeBase: 20
   m_fontWeight: 400
   m_enableAutoSizing: 0
   m_fontSizeMin: 8
@@ -137,7 +137,7 @@ MonoBehaviour:
   m_textAlignment: 65535
   m_characterSpacing: 0
   m_wordSpacing: 0
-  m_lineSpacing: 0
+  m_lineSpacing: -30
   m_lineSpacingMax: 0
   m_paragraphSpacing: 0
   m_charWidthMaxAdj: 0
@@ -161,7 +161,7 @@ MonoBehaviour:
   m_VertexBufferAutoSizeReduction: 0
   m_useMaxVisibleDescender: 1
   m_pageToDisplay: 1
-  m_margin: {x: 5.094133, y: 0, z: 5.197588, w: 2.380464}
+  m_margin: {x: 5.094133, y: 0, z: 4.604591, w: -0.6342205}
   m_isUsingLegacyAnimationComponent: 0
   m_isVolumetricText: 0
   m_hasFontAssetChanged: 0
@@ -195,13 +195,13 @@ RectTransform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 8186718047082489139}
-  m_LocalRotation: {x: 0.009255732, y: 0.7070462, z: -0.7070462, w: 0.009255732}
+  m_LocalRotation: {x: 0, y: 0.7071068, z: -0.7071068, w: 0}
   m_LocalPosition: {x: 0, y: 0, z: 4.76}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 8186718047339170614}
   m_RootOrder: 1
-  m_LocalEulerAnglesHint: {x: 90, y: 180, z: 1.5}
+  m_LocalEulerAnglesHint: {x: 90, y: 180, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
   m_AnchoredPosition: {x: -1, y: 0.10000038}
@@ -226,7 +226,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 3284601576198476621, guid: 6074e7ceb1c999b47a47d4fba8eae56e, type: 2}
+  - {fileID: -3055223373348529560, guid: 58780b5b0858c8d4fa3228d0bb234cc7, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -270,8 +270,8 @@ MonoBehaviour:
       m_Calls: []
   m_text: Test
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: 6074e7ceb1c999b47a47d4fba8eae56e, type: 2}
-  m_sharedMaterial: {fileID: 3284601576198476621, guid: 6074e7ceb1c999b47a47d4fba8eae56e, type: 2}
+  m_fontAsset: {fileID: 11400000, guid: 58780b5b0858c8d4fa3228d0bb234cc7, type: 2}
+  m_sharedMaterial: {fileID: -3055223373348529560, guid: 58780b5b0858c8d4fa3228d0bb234cc7, type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []
@@ -295,8 +295,8 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 14
-  m_fontSizeBase: 14
+  m_fontSize: 16
+  m_fontSizeBase: 16
   m_fontWeight: 400
   m_enableAutoSizing: 0
   m_fontSizeMin: 8
@@ -331,7 +331,7 @@ MonoBehaviour:
   m_VertexBufferAutoSizeReduction: 0
   m_useMaxVisibleDescender: 1
   m_pageToDisplay: 1
-  m_margin: {x: 5.0167212, y: 0, z: 5.0566006, w: 3.2864935}
+  m_margin: {x: 5.0167212, y: 0, z: 5.0566006, w: 2.9833884}
   m_isUsingLegacyAnimationComponent: 0
   m_isVolumetricText: 0
   m_hasFontAssetChanged: 0
