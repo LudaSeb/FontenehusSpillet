@@ -10,11 +10,21 @@ public class HentBilde : MonoBehaviour
     //[SerializeField] Image bilde;
     [SerializeField] MeshRenderer bildeMesh;
     [SerializeField] Sprite sprite;
+    [SerializeField] Image img;
 
 
     string bildePathOrig = "/Resources/Bilder/";
     string bildeMappeIndeks; //tallet som bildet har i bildelisten.
 
+
+   
+
+    private void Start()
+    {
+        img = GetComponent<Image>();
+        //FinnBilde("3");
+        Debug.Log("In start");
+    }
 
     public void FinnBilde(string bildeNummer)
     {
@@ -43,7 +53,8 @@ public class HentBilde : MonoBehaviour
         }
 
         //GetComponent<Image>().sprite = Sprite.Create(tex, new Rect(0,0,tex.width, tex.height), new Vector2(0.5f, 0.5f));
-        bildeMesh.material.mainTexture = tex;
+        //bildeMesh.material.mainTexture = tex;
+        img.image = tex;
 
         //bilde.sprite = Sprite.Create(tex, new Rect(0,0,tex.width, tex.height), new Vector2(0.5f, 0.5f));
         //bilde.sprite = sprite;
@@ -54,7 +65,7 @@ public class HentBilde : MonoBehaviour
         string file = null;
         if (!string.IsNullOrEmpty(path))
         {
-            var extensions = new string[] { ".png", ".jpg", ".gif" };
+            var extensions = new string[] { ".png", ".jpg", ".gif", ".jpeg" };
             try
             {
                 var di = new DirectoryInfo(path);

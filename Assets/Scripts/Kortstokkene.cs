@@ -31,16 +31,8 @@ public class Kortstokkene : MonoBehaviour
 
     public void LagKort()
     {
-        //Personlighetskortene
-        string[] allelinjer = File.ReadAllLines(Application.dataPath + kortstiPersonlighet);
+        string[] allelinjer;
         int kortTall = 0;
-        foreach (string s in allelinjer)
-        {
-            string[] splitData = s.Split(',');
-            PersonlighetsKort kort = new PersonlighetsKort(kortTall, splitData[0], "PersonlighetsKort");
-            personlighetsKort.Add(kort);
-            kortTall++;
-        }
 
         //Hendelseskortene
         allelinjer = File.ReadAllLines(Application.dataPath + kortstiHendelser);
@@ -52,6 +44,32 @@ public class Kortstokkene : MonoBehaviour
             kortTall++;
         }
 
+        //Sjansekortene
+        allelinjer = File.ReadAllLines(Application.dataPath + korstiSjansekort);
+        foreach (string s in allelinjer)
+        {
+            string[] splitData = s.Split(',');
+
+            List<string> modifikatorer = new List<string>();
+            for (int i = 0; i < 3; i++)
+            {
+                if (splitData[i + 2] != "")
+                {
+                    string data = splitData[i + 2].Trim('+');
+                    modifikatorer.Add(data.Trim());
+                }
+            }
+
+
+            SjanseKort kort = new SjanseKort(kortTall, splitData[0], "SjanseKort", int.Parse(splitData[1]), modifikatorer.ToArray(), splitData[5]);
+            sjanseKort.Add(kort);
+
+            //Debug.Log($"{kort.beskrivelse}, {kort.energi}, modifikatorlengde: {kort.modifikatorer.Length}, {kort.sporsmal}");
+            kortTall++;
+        }
+
+
+        //Nødkort
         allelinjer = File.ReadAllLines(Application.dataPath + kortstiNødstiltak);
         foreach (string s in allelinjer)
         {
@@ -62,28 +80,16 @@ public class Kortstokkene : MonoBehaviour
             kortTall++;
         }
 
-        allelinjer = File.ReadAllLines(Application.dataPath + korstiSjansekort);
+        //Personlighetskortene
+        allelinjer = File.ReadAllLines(Application.dataPath + kortstiPersonlighet);
         foreach (string s in allelinjer)
         {
             string[] splitData = s.Split(',');
-
-            List<string> modifikatorer = new List<string>();
-            for(int i = 0; i < 3; i++)
-            {
-                if(splitData[i+2] != "")
-                {
-                    string data = splitData[i + 2].Trim('+');
-                    modifikatorer.Add(data.Trim());
-                }
-            }
-
-
-            SjanseKort kort = new SjanseKort(kortTall, splitData[0], "SjanseKort", int.Parse(splitData[1]),modifikatorer.ToArray(), splitData[5]);
-            sjanseKort.Add(kort);
-
-            //Debug.Log($"{kort.beskrivelse}, {kort.energi}, modifikatorlengde: {kort.modifikatorer.Length}, {kort.sporsmal}");
+            PersonlighetsKort kort = new PersonlighetsKort(kortTall, splitData[0], "PersonlighetsKort");
+            personlighetsKort.Add(kort);
             kortTall++;
         }
+
         AssetDatabase.SaveAssets();
 
         StokkKortListe(hendelsesKort);
