@@ -14,6 +14,9 @@ public class UiManager : MonoBehaviour
 
     [SerializeField] TextMeshPro energiScore;
     [SerializeField] TextMeshPro humørModifikator;
+    [SerializeField] TextMeshProUGUI nødKortBeskrivelse;
+
+    bool kanByttePanel = true;
     //[SerializeField] Slider humørModifikator;
 
     public void OppdaterEnergi(string nyEnergi)
@@ -21,19 +24,33 @@ public class UiManager : MonoBehaviour
         energiScore.text = nyEnergi + "/30";
     }
 
+    public void OppdaterNødKortSkjerm(string t)
+    {
+        nødKortBeskrivelse.text = t;
+    }
+
     public void SetCurrentPanel(int panelIndex)
     {
-        for(int i = 0; i < uiPanels.Length; i++)
+        if (kanByttePanel)
         {
-            if(i == panelIndex)
+            for (int i = 0; i < uiPanels.Length; i++)
             {
-                uiPanels[i].SetActive(true);
-            }
-            else
-            {
-                uiPanels[i].SetActive(false);
+                if (i == panelIndex)
+                {
+                    uiPanels[i].SetActive(true);
+                }
+                else
+                {
+                    uiPanels[i].SetActive(false);
+                }
             }
         }
+        
+    }
+
+    public void SetKanByttePanel(bool state)
+    {
+        kanByttePanel = state;
     }
 
     public void SetHendelseskortVerdi(string beskrivelse, string vanskelighetsgrad)

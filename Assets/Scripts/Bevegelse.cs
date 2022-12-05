@@ -234,11 +234,13 @@ public class Bevegelse : MonoBehaviour
         {
             UI.OppdaterEnergi("0");
             UI.SetCurrentPanel(8);
+            UI.SetKanByttePanel(false);
             status = "NodTiltak";
             NødstiltakKort[] nodTiltakKort = GameObject.FindGameObjectWithTag("KortStokkene").GetComponent<Kortstokkene>().nødstiltakKort.ToArray();
             aktivtNodKort = nodTiltakKort[Random.Range(0, nodTiltakKort.Length)];
 
-            Debug.Log("Nødstiltak: " + aktivtNodKort.beskrivelse + ", " + aktivtNodKort.dager);
+            UI.OppdaterNødKortSkjerm($"Du har trukket et nødkort, der står det \n{aktivtNodKort.beskrivelse}\nDu hviler i {aktivtNodKort.dager} dager og starter med 10 i energi");
+            
         }
         else if(energi > 30)
         {
@@ -262,10 +264,25 @@ public class Bevegelse : MonoBehaviour
 
     public void Nodstiltak()
     {
-        ruteNummer += aktivtNodKort.dager - 1;
-        //SetStatusSovn();
-        energi = 10;
-        FlyttTilNesteDag();
+        UI.SetKanByttePanel(true);
+        
+        if(ruteNummer + aktivtNodKort.dager >= ruter.Length)
+        {
+            AvsluttSpillet();
+        }
+        else
+        {
+            ruteNummer += aktivtNodKort.dager - 1;
+
+            energi = 10;
+            UI.OppdaterEnergi(energi.ToString());
+            humørModifikator = 0;
+            UI.EndreHumørmodifikatorVerdi(humørModifikator);
+
+            FlyttTilNesteDag();
+        }
+
+        
     }
 
     void FlyttTilNesteDag()
@@ -276,11 +293,13 @@ public class Bevegelse : MonoBehaviour
         {
             if (ruteNummer == 27)
             {
-                transform.position = ruter[ruteNummer].transform.position;
+                //transform.position = ruter[ruteNummer].transform.position;
                 sisteDag = true;
             }
-            else
-            {
+            
+            
+
+                
 
                 StartCoroutine(FlyttSmud());
                 IEnumerator FlyttSmud()
@@ -315,7 +334,7 @@ public class Bevegelse : MonoBehaviour
 
                 }
 
-            }
+            
             
             
 
@@ -323,9 +342,41 @@ public class Bevegelse : MonoBehaviour
 
     }
 
+    void FlyttSmudEllers(Vector3 endPos)
+    {
+        StartCoroutine(FlyttSmud());
+        IEnumerator FlyttSmud()
+        {
+            float timePassed = 0;
+            float pos = 0;
+            float lerpDuration = 1.5f;
+            Vector3 startPos = gameObject.transform.position;
+            
+            while (timePassed < lerpDuration)
+            {
+
+                float placeInSequence = timePassed / lerpDuration;
+
+                transform.position = Vector3.Lerp(startPos, endPos, placeInSequence);
+
+
+                timePassed += Time.deltaTime;
+                yield return null;
+
+
+            }
+
+            transform.position = endPos;
+        }
+    }
+
     void AvsluttSpillet() 
     {
         UI.SetCurrentPanel(7);
+        Vector3 sisteRutePos = ruter[ruter.Length - 1].transform.position;
+
+        FlyttSmudEllers(new Vector3(sisteRutePos.x + -10, transform.position.y, sisteRutePos.z));
+        
     }
 
     int EndreHumørModifikator(int endring)

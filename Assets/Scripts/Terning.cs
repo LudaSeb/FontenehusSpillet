@@ -2,15 +2,17 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using TMPro;
-using UnityEngine.UI;
+using UnityEngine.UIElements;
 
 public class Terning : MonoBehaviour
 {
     [SerializeField] int maksTerning = 13;
     [SerializeField] float fysiskKastVenteTid = 4;
     [SerializeField] GameObject fysiskTerning;
-    [SerializeField] Button gåVidereKnapp;
-    
+    [SerializeField] GameObject gåVidereKnappObject;
+    [SerializeField] TextMeshProUGUI resultatText;
+
+    Button gåVidereKnapp;
     public int forrigeRull;
 
     GameObject rulletTerning;
@@ -18,8 +20,10 @@ public class Terning : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        
+        gåVidereKnapp = gåVidereKnappObject.GetComponent<Button>();
     }
+
+
 
     public int RullTerning()
     {
@@ -74,11 +78,31 @@ public class Terning : MonoBehaviour
 
             FysiskTerning fTer = rulletTerning.GetComponent<FysiskTerning>();
             fTer.GetComponent<FysiskTerning>().KastTerningen();
-            yield return new WaitForSeconds(fysiskKastVenteTid);
+
+            bool fterStillMoving = true ;
+            yield return new WaitForSeconds(1);
+            while (fterStillMoving)
+            {
+                Vector3 firstTPos = fTer.transform.position;
+                Quaternion firstTRot = fTer.transform.rotation;
+
+                yield return new WaitForSeconds(0.1f);
+                Vector3 secondTPos = fTer.transform.position;
+                Quaternion secondTRot = fTer.transform.rotation;
+
+                if (firstTPos == secondTPos && firstTRot == secondTRot)
+                {
+                    fterStillMoving = false;
+                }
+               
+            }
+            
             resultat = fTer.LesTerningen();
             forrigeRull = resultat;
-            Debug.Log("Du rullet: " + forrigeRull);
-            gåVidereKnapp.gameObject.SetActive(true);
+            resultatText.text = "Du rullet " + forrigeRull;
+
+            //gåVidereKnapp.SetEnabled(true);
+            gåVidereKnappObject.SetActive(true);
             
         }
         return resultat;

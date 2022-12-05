@@ -6,7 +6,23 @@ public class FysiskTerning : MonoBehaviour
 {
     [SerializeField] Vector3 StartPosisjon;
     //[SerializeField] Vector3 kraft;
+
+    public int selectedVector;
+    public Vector3[] vectorPoints;
     
+    public int[] resultater = { 1, 2, 3, 4, 5, 6 };
+    public int valgtResultat;
+    
+
+    //readonly List<int> FaceRepresent = new List<int>() { 0, 1, 2, 3, 4, 5, 6 };
+
+    
+    //readonly List<string> FaceRepresent = new List<string>() {"","I","II","III","IV","V","VI"};
+    void Start()
+    {
+        
+    }
+
     public void KastTerningen()
     {
         gameObject.SetActive(true);
@@ -15,56 +31,36 @@ public class FysiskTerning : MonoBehaviour
         GetComponent<Rigidbody>().AddForce(kraft);
     }
 
+
     public int LesTerningen()
     {
-        //Debug.Log(transform.up);
-        //1 på terningen
-        if(CalculateUpAxis(transform.up.y) == 1)
-        {
-            return 1;
-        }
-        //6 på terningen
-        else if(CalculateUpAxis(transform.up.y) == -1)
-        {
-            return 6;
-        }
-        //4 på terningen //klar
-        else if(CalculateUpAxis(transform.up.z) == 1)
-        {
-            return 4;
-        }
-        //3 på terningen //klar
-        else if (CalculateUpAxis(transform.up.z) == -1)
-        {
-            return 3;
-        }
-        // på terningen
-        else if (CalculateUpAxis(transform.up.x) == -1)
-        {
-            return 2;
-        }
-        //5 på terningen
-        else if (CalculateUpAxis(transform.up.x) == 1)
-        {
-            return 5;
-        }
-        //Debug.Log($"transform.up.x: {(int)transform.up.x}, transform.up.y: {(int)transform.up.y}, transform.up.z: {(int)transform.up.z}");
-
-        return 0;
-        
+        return valgtResultat;
     }
 
-    int CalculateUpAxis(float numberToCheck)
+    void Update()
     {
-        if(numberToCheck > 0.8f)
+        float bestDot = -1;
+        for (int i = 0; i < vectorPoints.Length; i++)
         {
-            return 1;
+
+            var valueVector = vectorPoints[i];
+            var worldSpaceValueVector = transform.localToWorldMatrix.MultiplyVector(valueVector);
+            float dot = Vector3.Dot(worldSpaceValueVector, Vector3.up);
+
+            if (dot > bestDot)
+            {
+                bestDot = dot;
+                selectedVector = i;
+            }
         }
-        else if(numberToCheck < -.8f)
-        {
-            return -1;
-        }
-        return 0;
+
+        valgtResultat = resultater[selectedVector];
+
     }
     
+
 }
+    
+
+    
+

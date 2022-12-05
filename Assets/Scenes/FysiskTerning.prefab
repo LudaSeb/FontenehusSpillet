@@ -127,6 +127,16 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   StartPosisjon: {x: -7, y: 7, z: 7}
+  selectedVector: 0
+  vectorPoints:
+  - {x: 1, y: 0, z: 0}
+  - {x: -1, y: 0, z: 0}
+  - {x: 0, y: 1, z: 0}
+  - {x: 0, y: -1, z: 0}
+  - {x: 0, y: 0, z: 1}
+  - {x: 0, y: 0, z: -1}
+  resultater: 020000000500000001000000060000000300000004000000
+  valgtResultat: 0
 --- !u!1001 &1331882213912426231
 PrefabInstance:
   m_ObjectHideFlags: 0
