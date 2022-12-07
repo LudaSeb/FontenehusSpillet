@@ -11,10 +11,12 @@ public class UiManager : MonoBehaviour
 
     [SerializeField] GameObject rulleTerningPanel;
     [SerializeField] GameObject resultatTerningPanel;
+    [SerializeField] GameObject menyPanel;
 
     [SerializeField] TextMeshPro energiScore;
     [SerializeField] TextMeshPro humørModifikator;
     [SerializeField] TextMeshProUGUI nødKortBeskrivelse;
+    [SerializeField] TextMeshProUGUI rullVerdi;
 
     bool kanByttePanel = true;
     //[SerializeField] Slider humørModifikator;
@@ -24,9 +26,19 @@ public class UiManager : MonoBehaviour
         energiScore.text = nyEnergi + "/30";
     }
 
+    public void LeggTilRullInfo(string s)
+    {
+        rullVerdi.text += s;
+    }
+
     public void OppdaterNødKortSkjerm(string t)
     {
         nødKortBeskrivelse.text = t;
+    }
+
+    public void VisMeny()
+    {
+        menyPanel.SetActive(true);
     }
 
     public void SetCurrentPanel(int panelIndex)
@@ -53,15 +65,17 @@ public class UiManager : MonoBehaviour
         kanByttePanel = state;
     }
 
-    public void SetHendelseskortVerdi(string beskrivelse, string vanskelighetsgrad)
+    public void SetHendelseskortVerdi(string beskrivelse, string vanskelighetsgrad, string kortnummer)
     {
         TextMeshProUGUI[] tekster = uiPanels[1].GetComponentsInChildren<TextMeshProUGUI>();
 
         tekster[0].text = beskrivelse;
         tekster[1].text = vanskelighetsgrad;
+
+        uiPanels[1].GetComponentInChildren<HentBilde>().FinnBilde(kortnummer);
     }
 
-    public void SetSjansekortVerdi(string beskrivelse, string energi, string[] modifikatorer, string spørsmål)
+    public void SetSjansekortVerdi(string beskrivelse, string energi, string[] modifikatorer, string spørsmål, string kortnummer)
     {
         TextMeshProUGUI[] tekster = uiPanels[2].GetComponentsInChildren<TextMeshProUGUI>();
         tekster[0].text = beskrivelse;
@@ -76,6 +90,10 @@ public class UiManager : MonoBehaviour
 
 
         tekster[3].text = spørsmål;
+
+        uiPanels[2].GetComponentInChildren<HentBilde>().FinnBilde(kortnummer);
+
+        
     }
 
     public void SetVisTerningSkjerm(bool status)

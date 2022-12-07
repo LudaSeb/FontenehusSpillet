@@ -45,7 +45,7 @@ public class Karakter : MonoBehaviour
     {
         for(int i = 0; i < displayEgenskaper.Length; i++)
         {
-            SetFargePåEgenskaper(i, new Color32(0, 0, 0, 255));
+            SetFargePåEgenskaper(i, new Color32(0,15,85,255));
         }
     }
 

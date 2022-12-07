@@ -26,6 +26,7 @@ public class Bevegelse : MonoBehaviour
     [SerializeField]int ruteNummer = -1;
     [SerializeField]int energi = 15;
     int humørModifikator = 0;
+    int forrigeHumørModifikator = 0;
 
     string vanskelighetsgrad = "safe";
 
@@ -64,12 +65,17 @@ public class Bevegelse : MonoBehaviour
 
                 break;
             case "HendelsesKort":
-                int energiViSkalLeggeTil = GetComponent<KasteBetydning>().SjekkTabell(RullMedHumørmodifikator(GetComponent<Terning>().forrigeRull + humørModifikator), vanskelighetsgrad);
-                Debug.Log("Vi skal legge til :" + energiViSkalLeggeTil);
+                //UI.LeggTilRullInfo($" {humørModifikator}({HumorModifikatorTekstVerdi(humørModifikator)})");
+                int rull = GetComponent<Terning>().forrigeRull;
+                int energiViSkalLeggeTil = GetComponent<KasteBetydning>().SjekkTabell(RullMedHumørmodifikator(rull + humørModifikator), vanskelighetsgrad);
+                
                 int humorForRull = humørModifikator;
+                
                 int humorEtterRull = SjekkHumørModifikator(GetComponent<Terning>().forrigeRull);
 
-                dagLagrer.LeggTilTekstDel("Energi etter dagens hendelse: " + energi + " + " + energiViSkalLeggeTil + " = " + (energi + energiViSkalLeggeTil) + "\n" + "Humørmodifikator var : " + humorForRull + " og er nå: " + humorEtterRull + "\n");
+                dagLagrer.LeggTilTekstDel("Energi etter dagens hendelse: " + energi + " + " + energiViSkalLeggeTil + " = " + (energi + energiViSkalLeggeTil) + "\n" +
+                    $"Rull: {rull} med humør {HumorModifikatorTekstVerdi(forrigeHumørModifikator)}({forrigeHumørModifikator})\n" 
+                    + "Humørmodifikator var : " + humorForRull + " og er nå: " + humorEtterRull + "\n");
 
                 LeggTilEnergi(energiViSkalLeggeTil);
 
@@ -78,12 +84,13 @@ public class Bevegelse : MonoBehaviour
                 //Debug.Log("Energi etter hendelse, med vanskelighetsgrad: " + energi.ToString() + ", " + vanskelighetsgrad);
                 break;
             case "RoligDag":
-
-                int energiLagtTilRoligDag = GetComponent<KasteBetydning>().SjekkTabell(GetComponent<Terning>().forrigeRull, "safe");
+                int forrigeRull = GetComponent<Terning>().forrigeRull;
+                int energiLagtTilRoligDag = GetComponent<KasteBetydning>().SjekkTabell(forrigeRull, "safe");
 
                 
-                dagLagrer.LeggTilTekstDel("Energi etter rolig dag: " + energi + " + " + energiLagtTilRoligDag + " = " + (energi + energiLagtTilRoligDag) + "\n");
-
+                dagLagrer.LeggTilTekstDel($"Energi etter rolig dag: {energi} + {energiLagtTilRoligDag} = {energi + energiLagtTilRoligDag} \n" +
+                    $"Rull : {forrigeRull}\n");
+                    
                 LeggTilEnergi(energiLagtTilRoligDag);
 
                 //SjekkHumørModifikator(GetComponent<Terning>().forrigeRull);
@@ -102,7 +109,7 @@ public class Bevegelse : MonoBehaviour
         SjanseKort[] sjansekort = GameObject.FindGameObjectWithTag("KortStokkene").GetComponent<Kortstokkene>().sjanseKort.ToArray();
         SjanseKort k = sjansekort[Random.Range(0, sjansekort.Length)];
         //SjanseKort k = sjansekort[1];
-        Debug.Log(k.beskrivelse);
+        
         KeyValuePair<string, int>[] m = new KeyValuePair<string, int>[k.modifikatorer.Length];
         for (int i = 0; i < k.modifikatorer.Length; i++)
         {
@@ -146,7 +153,7 @@ public class Bevegelse : MonoBehaviour
         
         
 
-        SetStatusSjansekort(k.beskrivelse, k.energi.ToString(), k.modifikatorer, k.sporsmal);
+        SetStatusSjansekort(k.beskrivelse, k.energi.ToString(), k.modifikatorer, k.sporsmal, k.kortTall.ToString());
         //Debug.Log("Energi etter kort er: " + energi);
         LeggTilEnergi(k.energi + totalEnergiFraModifikatorer);
 
@@ -208,11 +215,11 @@ public class Bevegelse : MonoBehaviour
 
     }
 
-    public void SetStatusSjansekort(string beskrivelse, string energi, string[] modifikatorer, string spørsmål)
+    public void SetStatusSjansekort(string beskrivelse, string energi, string[] modifikatorer, string spørsmål, string kortnummer)
     {
         UI.SetCurrentPanel(2);
 
-        UI.SetSjansekortVerdi(beskrivelse, energi, modifikatorer, spørsmål);
+        UI.SetSjansekortVerdi(beskrivelse, energi, modifikatorer, spørsmål, kortnummer);
     }
 
     public void SetStatusHendelsesKort()
@@ -405,6 +412,7 @@ public class Bevegelse : MonoBehaviour
 
     int SjekkHumørModifikator(int terningKast)
     {
+        forrigeHumørModifikator = humørModifikator;
         //Debug.Log(terningKast);
         if (terningKast > 4)
         {
@@ -435,6 +443,32 @@ public class Bevegelse : MonoBehaviour
 
     }
 
+
+    string HumorModifikatorTekstVerdi(int i)
+    {
+        if(i == -2)
+        {
+            return "veldig kjip";   
+        }
+        else if(i == -1)
+        {
+            return "kjip";
+        }
+        else if (i == 0)
+        {
+            return "ok";
+        }
+        else if (i == 1)
+        {
+            return "bra";
+        }
+        else if (i == 2)
+        {
+            return "veldig bra";
+        }
+
+        return "Ingen verdi";
+    }
 
 
 

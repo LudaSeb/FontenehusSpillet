@@ -8,9 +8,7 @@ using System.Linq;
 public class HentBilde : MonoBehaviour
 {
     //[SerializeField] Image bilde;
-    [SerializeField] MeshRenderer bildeMesh;
-    [SerializeField] Sprite sprite;
-    [SerializeField] Image img;
+    [SerializeField]Image img;
 
 
     string bildePathOrig = "/Resources/Bilder/";
@@ -22,13 +20,11 @@ public class HentBilde : MonoBehaviour
     private void Start()
     {
         img = GetComponent<Image>();
-        //FinnBilde("3");
-        Debug.Log("In start");
     }
 
     public void FinnBilde(string bildeNummer)
     {
-        bildeMappeIndeks += bildeNummer;
+        bildeMappeIndeks = bildeNummer;
         string bildeMappePath = Application.dataPath + bildePathOrig + bildeMappeIndeks;
 
         string path = GetRandomFile(bildeMappePath);
@@ -39,7 +35,7 @@ public class HentBilde : MonoBehaviour
         //rfp.Process(bildeMappePath);
 
         //string bildeMappePath = bildePathOrig + bildeMappeIndeks;
-        Texture2D tex = new Texture2D(0,0);
+        Texture2D tex = new Texture2D(400,400);
         //tex.LoadImage(bildeMappeIndeks.bytes);
         
 
@@ -51,10 +47,16 @@ public class HentBilde : MonoBehaviour
             tex.LoadImage(fileData); //..this will auto-resize the texture dimensions.
             
         }
+        else
+        {
+            Debug.Log("filepath wrong: " + path);
+        }
+        
 
         //GetComponent<Image>().sprite = Sprite.Create(tex, new Rect(0,0,tex.width, tex.height), new Vector2(0.5f, 0.5f));
         //bildeMesh.material.mainTexture = tex;
-        img.image = tex;
+        img.sprite = Sprite.Create(tex, new Rect(0, 0, tex.width, tex.height), new Vector2(0.5f, 0.5f));
+            
 
         //bilde.sprite = Sprite.Create(tex, new Rect(0,0,tex.width, tex.height), new Vector2(0.5f, 0.5f));
         //bilde.sprite = sprite;
