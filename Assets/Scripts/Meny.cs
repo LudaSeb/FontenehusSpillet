@@ -8,6 +8,6 @@ public class Meny : MonoBehaviour
     
     public void TilbakeTilStart()
     {
-        SceneManager.LoadScene("");
+        SceneManager.LoadScene("StartScene");
     }
 }

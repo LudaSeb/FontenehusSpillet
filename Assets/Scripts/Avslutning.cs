@@ -6,9 +6,15 @@ using TMPro;
 public class Avslutning : MonoBehaviour
 {
     [SerializeField] TextMeshProUGUI oppsumeringsRapport;
+    [SerializeField] TextMeshProUGUI navn;
+    [SerializeField] TextMeshProUGUI alder;
+    [SerializeField] Karakter karakter;
     [SerializeField] DagLagrer dagLagrer;
     private void OnEnable()
     {
+        navn.text = karakter.navn;
+        alder.text = karakter.alder;
+
         int[] dager = dagLagrer.dagRapport;
         string dagTekst = "";
         int j = 0;

@@ -45,6 +45,7 @@ public class UiManager : MonoBehaviour
     {
         if (kanByttePanel)
         {
+            GetComponent<AudioSource>().Play();
             for (int i = 0; i < uiPanels.Length; i++)
             {
                 if (i == panelIndex)
