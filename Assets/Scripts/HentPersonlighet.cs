@@ -53,7 +53,7 @@ private static string kortstiHendelser = "/Resources/Hendelser/Hendelser.csv";
                 personlighetskortene.beskrivelse = splitData[0];
                 personlighetskortene.kortType = "Personlighetskort";
 
-                AssetDatabase.CreateAsset(personlighetskortene, $"Assets/Resources/Personlighet/{personlighetskortene.beskrivelse}.asset");
+                //AssetDatabase.CreateAsset(personlighetskortene, $"Assets/Resources/Personlighet/{personlighetskortene.beskrivelse}.asset");
             }
             
 
@@ -68,7 +68,7 @@ private static string kortstiHendelser = "/Resources/Hendelser/Hendelser.csv";
             hendelseskortene.kortType = "Hendelseskort";
             hendelseskortene.vanskelighetsgrad = splitData[1];
 
-            AssetDatabase.CreateAsset(hendelseskortene, $"Assets/Resources/Hendelser/{hendelseskortene.beskrivelse}.asset");
+            //AssetDatabase.CreateAsset(hendelseskortene, $"Assets/Resources/Hendelser/{hendelseskortene.beskrivelse}.asset");
         }
 
         allelinjer = File.ReadAllLines(Application.dataPath + korstiNødstiltak);
@@ -82,7 +82,7 @@ private static string kortstiHendelser = "/Resources/Hendelser/Hendelser.csv";
 
             //AssetDatabase.CreateAsset(hendelseskortene, $"Assets/Resources/Hendelser/{hendelseskortene.beskrivelse}.asset");
         }
-        AssetDatabase.SaveAssets();
+        //AssetDatabase.SaveAssets();
 
 
 

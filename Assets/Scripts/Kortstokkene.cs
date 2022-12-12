@@ -90,7 +90,7 @@ public class Kortstokkene : MonoBehaviour
             kortTall++;
         }
 
-        AssetDatabase.SaveAssets();
+        //AssetDatabase.SaveAssets();
 
         StokkKortListe(hendelsesKort);
         StokkKortListe(sjanseKort);

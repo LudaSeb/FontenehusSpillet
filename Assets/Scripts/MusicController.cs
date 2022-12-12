@@ -1,18 +1,21 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Audio;
+using UnityEngine.UI;
 
 public class MusicController : MonoBehaviour
 {
-    // Start is called before the first frame update
+    [SerializeField] AudioMixer audioMixer;
+    Slider volumeControl;
+    
     void Start()
     {
-        
+        volumeControl = GetComponent<Slider>();
     }
 
-    // Update is called once per frame
-    void Update()
+    public void ChangeVolume()
     {
-        
+        audioMixer.SetFloat("MasterVolume", volumeControl.value);
     }
 }
