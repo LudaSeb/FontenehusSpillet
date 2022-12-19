@@ -99,7 +99,7 @@ public class UiManager : MonoBehaviour
 
     public void SetVisTerningSkjerm(bool status)
     {
-        Debug.Log("Vi er i vis terning: " + status);
+        //Debug.Log("Vi er i vis terning: " + status);
         rulleTerningPanel.SetActive(status);
     }
 

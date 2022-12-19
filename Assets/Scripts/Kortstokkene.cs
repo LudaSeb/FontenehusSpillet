@@ -24,18 +24,26 @@ public class Kortstokkene : MonoBehaviour
         LagKort();
     }
 
-    private static string kortstiPersonlighet = "/Resources/Personlighet/Personlighet.csv";
-    private static string kortstiHendelser = "/Resources/Hendelser/Hendelser.csv";
-    private static string kortstiNødstiltak = "/Resources/Nødstiltakkort/Nødstiltakkort.csv";
-    private static string korstiSjansekort = "/Resources/Sjansekort/Sjansekort.csv";
+    private static string kortstiPersonlighet = "Personlighet/Personlighet";
+    private static string kortstiHendelser = "Hendelser/Hendelser";
+    private static string kortstiNødstiltak = "Nodstiltakkort/Nødstiltakkort";
+    private static string korstiSjansekort = "Sjansekort/Sjansekort";
 
     public void LagKort()
     {
         string[] allelinjer;
         int kortTall = 0;
 
-        //Hendelseskortene
-        allelinjer = File.ReadAllLines(Application.dataPath + kortstiHendelser);
+        TextAsset currentFileBeingProcessed;
+
+        //Debug.Log(textFile);
+
+        //Hendelseskortene //Resources.load burde det stå her
+        //Resources.Load();
+        //allelinjer = File.ReadAllLines(Application.dataPath + kortstiHendelser);
+        currentFileBeingProcessed = Resources.Load<TextAsset>(kortstiHendelser);
+        
+        allelinjer = currentFileBeingProcessed.text.Split('\n');
         foreach (string s in allelinjer)
         {
             string[] splitData = s.Split(',');
@@ -44,8 +52,10 @@ public class Kortstokkene : MonoBehaviour
             kortTall++;
         }
 
+
         //Sjansekortene
-        allelinjer = File.ReadAllLines(Application.dataPath + korstiSjansekort);
+        currentFileBeingProcessed = Resources.Load<TextAsset>(korstiSjansekort);
+        allelinjer = currentFileBeingProcessed.text.Split('\n');
         foreach (string s in allelinjer)
         {
             string[] splitData = s.Split(',');
@@ -70,7 +80,8 @@ public class Kortstokkene : MonoBehaviour
 
 
         //Nødkort
-        allelinjer = File.ReadAllLines(Application.dataPath + kortstiNødstiltak);
+        currentFileBeingProcessed = Resources.Load<TextAsset>(kortstiNødstiltak);
+        allelinjer = currentFileBeingProcessed.text.Split('\n');
         foreach (string s in allelinjer)
         {
             string[] splitData = s.Split(',');
@@ -81,7 +92,8 @@ public class Kortstokkene : MonoBehaviour
         }
 
         //Personlighetskortene
-        allelinjer = File.ReadAllLines(Application.dataPath + kortstiPersonlighet);
+        currentFileBeingProcessed = Resources.Load<TextAsset>(kortstiPersonlighet);
+        allelinjer = currentFileBeingProcessed.text.Split('\n');
         foreach (string s in allelinjer)
         {
             string[] splitData = s.Split(',');

@@ -28,7 +28,15 @@ public class Avslutning : MonoBehaviour
             }
             if(j == 0)
             {
-                dagTekst += "\t\t\t";
+                if(i > 9)
+                {
+                    dagTekst += "     ";
+                }
+                else
+                {
+                    dagTekst += "      ";
+                }
+                
                 j = 1;
             }
             else if(j >= 1)

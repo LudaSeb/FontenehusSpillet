@@ -49,7 +49,7 @@ public class AlleRuter : MonoBehaviour
             
             trukketKortIndex++;
 
-            Debug.Log("Satt kort");
+            //Debug.Log("Satt kort");
 
 
         }

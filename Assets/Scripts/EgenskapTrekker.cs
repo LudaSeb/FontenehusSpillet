@@ -20,13 +20,13 @@ public class EgenskapTrekker : MonoBehaviour
             kortListe.Add(kortstokkene.personlighetsKort[i]);
         }
 
-        Debug.Log("Trukkede kort telling: " + kortListe.Count);
+        //Debug.Log("Trukkede kort telling: " + kortListe.Count);
        
         
         List<Kort> trukkedeEgenskaper = GameObject.FindGameObjectWithTag("KortStokk").GetComponent<Kortstokk>().Trekk(5, kortListe);
         for(int i = 0; i < 5; i++)
         {
-            Debug.Log(kortListe[i].beskrivelse);
+            //Debug.Log(kortListe[i].beskrivelse);
             egenskapsArray[i] = trukkedeEgenskaper[i].beskrivelse;
             
             egenskaper += $"{trukkedeEgenskaper[i].beskrivelse}\n";

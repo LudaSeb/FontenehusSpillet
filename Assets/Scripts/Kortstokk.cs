@@ -11,10 +11,10 @@ public class Kortstokk : MonoBehaviour
         List<int> trukkedeKortIndekser = new List<int>();
         for (int i = 0; i < antallKort; i++)
         {
-            Debug.Log("Trukket kort indeks: " + i);
+            //Debug.Log("Trukket kort indeks: " + i);
             int trukketKortIndeks = Random.Range(0, trekkeBunke.Count);
 
-            Debug.Log("Kort som ble trukket: " + trukketKortIndeks);
+            //Debug.Log("Kort som ble trukket: " + trukketKortIndeks);
             
             bool leggTilKort = true;
             for(int j = 0; j < trukkedeKortIndekser.Count; j++)

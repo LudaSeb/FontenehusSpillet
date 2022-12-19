@@ -11,7 +11,7 @@ public class HentBilde : MonoBehaviour
     [SerializeField]Image img;
 
 
-    string bildePathOrig = "/Resources/Bilder/";
+    string bildePathOrig = "Bilder/";
     string bildeMappeIndeks; //tallet som bildet har i bildelisten.
 
 
@@ -25,9 +25,9 @@ public class HentBilde : MonoBehaviour
     public void FinnBilde(string bildeNummer)
     {
         bildeMappeIndeks = bildeNummer;
-        string bildeMappePath = Application.dataPath + bildePathOrig + bildeMappeIndeks;
+        string bildeMappePath = bildePathOrig + bildeMappeIndeks;
 
-        string path = GetRandomFile(bildeMappePath);
+        //string path = GetRandomFile(bildeMappePath);
         
         //Debug.Log(bildeMappePath);
 
@@ -35,11 +35,12 @@ public class HentBilde : MonoBehaviour
         //rfp.Process(bildeMappePath);
 
         //string bildeMappePath = bildePathOrig + bildeMappeIndeks;
-        Texture2D tex = new Texture2D(400,400);
+        //Texture2D tex = new Texture2D(400,400);
+        Texture2D tex = GetRandomFile(bildeMappePath);
         //tex.LoadImage(bildeMappeIndeks.bytes);
-        
 
-        byte[] fileData;
+
+        /*byte[] fileData;
 
         if (File.Exists(path))
         {
@@ -50,8 +51,8 @@ public class HentBilde : MonoBehaviour
         else
         {
             Debug.Log("filepath wrong: " + path);
-        }
-        
+        }*/
+
 
         //GetComponent<Image>().sprite = Sprite.Create(tex, new Rect(0,0,tex.width, tex.height), new Vector2(0.5f, 0.5f));
         //bildeMesh.material.mainTexture = tex;
@@ -62,9 +63,20 @@ public class HentBilde : MonoBehaviour
         //bilde.sprite = sprite;
     }
 
-    string GetRandomFile(string path)
+    Texture2D GetRandomFile(string path)
     {
-        string file = null;
+        Texture2D[] potentialTextures = Resources.LoadAll<Texture2D>(path);
+        Texture2D chosenTexture;
+        if (potentialTextures.Length > 0)
+        {
+            chosenTexture = potentialTextures[Random.Range(0, potentialTextures.Length)];
+        }
+        else
+        {
+            chosenTexture = Resources.Load<Texture2D>("Bilder/Default/Default");
+        }
+        
+        /*string file = null;
         if (!string.IsNullOrEmpty(path))
         {
             var extensions = new string[] { ".png", ".jpg", ".gif", ".jpeg" };
@@ -78,8 +90,8 @@ public class HentBilde : MonoBehaviour
             // probably should only catch specific exceptions
             // throwable by the above methods.
             catch { }
-        }
-        return file;
+        }*/
+        return chosenTexture;
     }
 }
 

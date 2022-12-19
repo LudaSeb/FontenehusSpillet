@@ -67,14 +67,19 @@ public class Bevegelse : MonoBehaviour
             case "HendelsesKort":
                 //UI.LeggTilRullInfo($" {humørModifikator}({HumorModifikatorTekstVerdi(humørModifikator)})");
                 int rull = GetComponent<Terning>().forrigeRull;
-                int energiViSkalLeggeTil = GetComponent<KasteBetydning>().SjekkTabell(RullMedHumørmodifikator(rull + humørModifikator), vanskelighetsgrad);
-                
+                int rullMedHumorMod = RullMedHumørmodifikator(rull + humørModifikator);
+                int energiViSkalLeggeTil = GetComponent<KasteBetydning>().SjekkTabell(rullMedHumorMod, vanskelighetsgrad);
+
+                //Debug.Log($"Rull med humør mod: {rullMedHumorMod}, Energi vi skal legge til: {energiViSkalLeggeTil}, vanskelighetsgrad: {vanskelighetsgrad}");
+
                 int humorForRull = humørModifikator;
                 
-                int humorEtterRull = SjekkHumørModifikator(GetComponent<Terning>().forrigeRull);
-
+                SjekkHumørModifikator(GetComponent<Terning>().forrigeRull);
+                
+                int humorEtterRull = humørModifikator;
+                
                 dagLagrer.LeggTilTekstDel("Energi etter dagens hendelse: " + energi + " + " + energiViSkalLeggeTil + " = " + (energi + energiViSkalLeggeTil) + "\n" +
-                    $"Rull: {rull} med humør {HumorModifikatorTekstVerdi(forrigeHumørModifikator)}({forrigeHumørModifikator})\n" 
+                    $"Rull: {RullMedHumørmodifikator(rull + forrigeHumørModifikator)} - Base: {rull} + Mod: {forrigeHumørModifikator}\n" 
                     + "Humørmodifikator var : " + humorForRull + " og er nå: " + humorEtterRull + "\n");
 
                 LeggTilEnergi(energiViSkalLeggeTil);

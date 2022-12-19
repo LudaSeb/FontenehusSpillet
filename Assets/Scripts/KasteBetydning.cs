@@ -12,17 +12,24 @@ public class KasteBetydning : MonoBehaviour
 
     public int SjekkTabell(int terningkast, string status)
     {
-        switch (status)
+        string trimmedStatus = status.ToLower().Trim();
+        //Debug.Log($"Sjekker tabellen: terning: {terningkast}, vanskelighetsgrad: {trimmedStatus}");
+        switch (trimmedStatus)
         {
-            case "fint":
+            case "fin":
+                //Debug.Log("fin " + (terningkast - 1));
                 return fint[terningkast - 1];
             case "normal":
+                //Debug.Log("normal " + (terningkast - 1));
                 return normal[terningkast - 1];
             case "kjip":
+                //Debug.Log("kjipt " + (terningkast - 1));
                 return kjip[terningkast - 1];
             case "sovn":
+                //Debug.Log("sovn " + (terningkast - 1));
                 return sovn[terningkast - 1];
             case "safe":
+                //Debug.Log("safe " + (terningkast - 1));
                 return safe[terningkast - 1];
             default:
                 return 0;
